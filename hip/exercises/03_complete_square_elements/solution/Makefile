@@ -1,0 +1,18 @@
+# ------------------------------
+
+HIPCC    = hipcc
+OFFLOAD_ARCH ?= gfx1100,gfx1150,gfx1151,gfx1201
+HIPFLAGS      = --offload-arch=$(OFFLOAD_ARCH)
+
+# ------------------------------
+
+square_elements: square_elements.o
+	$(HIPCC) $(HIPFLAGS) square_elements.o -o square_elements
+
+square_elements.o: square_elements.cpp
+	$(HIPCC) $(HIPFLAGS) -c square_elements.cpp
+
+.PHONY: clean
+
+clean:
+	rm -f square_elements *.o
